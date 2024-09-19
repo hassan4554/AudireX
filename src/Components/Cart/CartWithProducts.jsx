@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { incrementCartItem, decrementCartItem, removeCartItem } from '../Redux/CartItems/cartItemSlice'
 import { MdDeleteForever } from "react-icons/md";
 import { useState, useEffect } from 'react';
-import './cart.css'
+import './Cart.css'
 
 const CartWithProducts = () => {
     const cartItems = useSelector((state) => state.cartItems.value);
