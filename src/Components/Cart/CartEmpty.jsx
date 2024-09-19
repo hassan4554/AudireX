@@ -1,6 +1,6 @@
 import { BsFillCartXFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
-import './Cart.css'
+import './cart.css'
 
 const CartEmpty = () => {
     return (
