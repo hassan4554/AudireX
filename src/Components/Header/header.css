@@ -1,0 +1,103 @@
+.header {
+    display: grid;
+    grid-template-columns: 0.60fr 0.40fr;
+    padding: 2rem 1rem;
+}
+
+.header-img {
+    width: 100%;
+    object-fit: contain;
+    height: 100%;
+    padding-right: 2rem;
+}
+
+.header-details {
+    padding: 8rem 12rem 4rem 8rem;
+    padding-right: 2rem;
+}
+
+.header-heading-3 {
+    font-size: 2.3rem;
+    font-weight: 400;
+}
+
+.header-heading-1 {
+    font-size: 4rem;
+    padding-right: 10rem;
+    margin-bottom: 2.5rem;
+}
+
+.shopBtn {
+    background-color: #ff0000;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 1.6rem;
+    padding: 1.3rem 2.3rem;
+    display: block;
+}
+
+.header-price {
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.header-price>span {}
+
+.finalPrice {
+    font-size: 2.4rem;
+    display: inline-block;
+    margin-right: 1.5rem;
+}
+
+.ogPrice {
+    font-size: 1.7rem;
+    font-style: italic;
+}
+
+.background-text {
+    position: absolute;
+    top: 20%;
+    left: 6%;
+    z-index: -1;
+    font-size: 20rem;
+    font-weight: bold;
+    color: rgba(165, 179, 196, 0.05);
+}
+
+
+@media only screen and (max-width:50.625em) {
+    .header {
+        grid-template-columns: 1fr;
+    }
+
+    .header-figure {
+        grid-row: 1/2;
+        margin: 0 auto;
+    }
+
+    .header-img {
+        width: 60%;
+        height: auto;
+    }
+
+    .header-details {
+        padding: 2rem;
+        padding-right: 0rem;
+    }
+
+    .header-heading-1 {
+        padding-right: 1rem;
+        font-size: 3.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .header-heading-3 {
+        font-size: 1.8rem;
+    }
+
+    .background-text {
+        font-size: 10rem;
+    }
+}

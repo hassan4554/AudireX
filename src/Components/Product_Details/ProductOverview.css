@@ -1,0 +1,22 @@
+.overview-container {
+    padding: 1.5rem;
+}
+
+.overview-container>h3 {
+    font-size: 2.5rem;
+    margin-bottom: 2.4rem;
+}
+
+.ov-title {
+    color: #ff0000;
+}
+
+.ov-item {
+    font-size: 1.6rem;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+}
+
+.overview-container>p {
+    font-size: 1.6rem;
+}

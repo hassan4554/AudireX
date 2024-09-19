@@ -1,0 +1,121 @@
+.products-listing-container {
+    display: grid;
+    grid-template-rows: repeat(3, max-content);
+    place-content: center;
+    padding: 6rem 3rem 3rem;
+    max-width: 120rem;
+}
+
+.products-listing-heading {
+    font-size: 3rem;
+    font-weight: 700;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.categories-container {
+    margin: 2.5rem auto;
+    padding: 1.3rem;
+    font-size: 2rem;
+}
+
+.categories {
+    display: flex;
+    column-gap: 8rem;
+    row-gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.categories>div {
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+}
+
+.categories>div:hover {
+    background-color: #ff0000;
+    color: #fff;
+    cursor: pointer;
+}
+
+.products-listing {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
+    gap: 2rem;
+}
+
+.product-card {
+    padding: 1rem;
+    border: 2px solid #4d4d4d;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.card-img {
+    object-fit: contain;
+    width: 80%;
+    height: 80%;
+    transition: all 0.3s;
+}
+
+.card-img:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.card-info {
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.card-price {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: baseline;
+}
+
+.fn-price {
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.og-price {
+    font-size: 1.3rem;
+    font-style: italic;
+}
+
+.cardBtn {
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    background-color: #ff0000;
+    font-size: 1.6rem;
+    padding: 0.8rem 0;
+}
+
+.view-card {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.view-link {
+    font-size: 2.3rem;
+}

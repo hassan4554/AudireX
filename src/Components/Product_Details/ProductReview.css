@@ -1,0 +1,63 @@
+.reviews-container {
+    display: grid;
+    grid-template-columns: 0.4fr;
+    padding: 1.5rem;
+}
+
+.review {
+    padding: 1rem;
+}
+
+.review-div-1 {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.review-figure {
+    width: 20%;
+}
+
+.review-img {
+    object-fit: contain;
+    width: 80%;
+    border-radius: 50%;
+}
+
+.ratings {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.review-name {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #ff0000;
+    /* margin-bottom: 0.3rem; */
+}
+
+.rating-date {
+    font-size: 1.7rem;
+    color: #4d4d4d;
+}
+
+.rating-stars {
+    color: #ff0000;
+    font-size: 1.3rem;
+}
+
+.rating-count {
+    margin-top: 0.5rem;
+}
+
+.slash {
+    font-size: 1.6rem;
+}
+
+.review-div-2 {
+    margin-top: 1rem;
+    text-align: justify;
+    font-size: 1.4rem;
+}

@@ -1,0 +1,49 @@
+.services {
+    text-align: center;
+    padding: 5rem 2rem;
+}
+
+.services-heading {
+    font-size: 4rem;
+    margin: 2rem 0 4rem 0;
+}
+
+.services-heading-3 {
+    font-size: 2.2rem;
+}
+
+.services-text {
+    font-size: 1.2rem;
+}
+
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    gap: 6rem;
+    place-content: center;
+    text-align: start;
+}
+
+.advantage {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 2rem;
+}
+
+.advantage-icon {
+    color: #ff0000;
+    font-size: 3rem;
+}
+
+@media only screen and (max-width:62.5em) {
+    .services-container {
+        grid-template-columns: repeat(2, max-content);
+    }
+}
+
+@media only screen and (max-width:31.25em) {
+    .services-container {
+        grid-template-columns: max-content;
+    }
+}

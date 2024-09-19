@@ -1,0 +1,48 @@
+.sub-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1rem;
+    background-color: #000;
+}
+
+.copyrights {
+    font-size: 1.6rem;
+}
+
+.socials{
+    padding-right: 5rem;
+}
+
+.socials-tab {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.socials-item {
+    list-style: none;
+    font-size: 2rem;
+}
+
+.backToTop {
+    background-color: #ff0000;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-size: 3.3rem;
+    border-radius: 3px;
+    width: 4rem;
+    height: 4rem;
+    position: fixed;
+    bottom: 1%;
+    right: 1%;
+}
+
+
+@media only screen and (max-width:43.75em) {
+    .sub-footer {
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+}

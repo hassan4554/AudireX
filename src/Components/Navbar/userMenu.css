@@ -1,0 +1,58 @@
+.userMenu {
+    width: 25%;
+    position: fixed;
+    right: 2%;
+    top: 15%;
+    padding: 1.5rem;
+    border: 1.5px solid #3a3d40;
+    border-radius: 3px;
+    background-color: #161819;
+}
+
+.userMenu-heading {
+    font-size: 1.6rem;
+}
+
+.userMenu-text {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.userMenu-btn {
+    border: 1px solid #3a3d40;
+    outline: none;
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    background-color: transparent;
+}
+
+.userMenu-items {
+    list-style: none;
+    font-size: 1.6rem;
+    color: inherit;
+}
+
+.userMenu-items:hover {
+    cursor: pointer;
+    color: #fff;
+    text-shadow: 0 0 1px #fff;
+}
+
+@media only screen and (max-width:59.7em) {
+    .userMenu {
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width:50em) {
+    .userMenu {
+        width: 40%;
+    }
+}
+
+@media only screen and (max-width:33.125em) {
+    .userMenu {
+        width: 60%;
+    }
+}
