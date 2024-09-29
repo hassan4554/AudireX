@@ -54,7 +54,6 @@ export const authSlice = createSlice({
             })
             .addCase(signupRoute.fulfilled, (state, action) => {
                 let response = action.payload;
-                console.log(response)
                 state.isLoading = false
 
                 if (response.error) {
@@ -70,7 +69,7 @@ export const authSlice = createSlice({
             .addCase(signupRoute.rejected, (state, action) => {
                 console.log('Rejected')
                 state.isLoading = false
-                console.log(action.payload)
+                console.log(action)
             })
 
         ////////////       LoginRoute      /////////////////////////
