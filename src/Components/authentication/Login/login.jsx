@@ -1,16 +1,20 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { authContext } from '../../Utilities/context';
 import { useNavigate } from 'react-router-dom';
 import Signup from '../Signup/Signup';
 import { useDocTitle } from '../../Utilities/DocumentTitle';
 import { PiWarningCircleBold } from "react-icons/pi";
-import { hostname } from '../../Utilities/hostname';
+// import { hostname } from '../../Utilities/hostname';
+import { loginRoute } from '../../Redux/Auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import './login.css'
 
 const Login = () => {
   useDocTitle('Login - AudireX');
   const { setAuthPage } = useContext(authContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const state = useSelector((state) => state.auth)
 
   const [form, setForm] = useState({
     email: '',
@@ -25,31 +29,50 @@ const Login = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    dispatch(loginRoute(form))
 
-    let a = await fetch(`${hostname}/auth/login`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: '/',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-      }
-    );
-    let response = await a.json();
+    // let a = await fetch(`${hostname}/auth/login`,
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       Accept: '/',
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(form)
+    //   }
+    // );
+    // let response = await a.json();
 
-    if (response.message == null) {
-      alert(response.error);
-      setWarning(response.error);
-      setIsWarning(true);
-    } else {
-      setIsWarning(false);
-      localStorage.setItem('token', response.token);
+    // if (response.message == null) {
+    //   setWarning(response.error);
+    //   setIsWarning(true);
+    // } else {
+    //   setIsWarning(false);
+    //   localStorage.setItem('token', response.token);
+    //   setForm({});
+    //   navigate('/');
+    //   window.location.reload();
+    // }
+  }
+
+  useEffect(() => {
+    if (state.authState) {
       setForm({});
       navigate('/');
       window.location.reload();
     }
-  }
+  }, [state.authState])
+
+
+  useEffect(() => {
+    if (state.error) {
+      setWarning(state.error);
+      setIsWarning(true);
+    } else {
+      setWarning(null);
+      setIsWarning(false);
+    }
+  }, [state.error])
 
   return (
     <div className='login-container' >
@@ -71,7 +94,8 @@ const Login = () => {
             </div>
           }
           <div className="form-input">
-            <input type="password" name="password" onChange={handleInputChange} placeholder='Password' value={form.password} required />
+            <input type="password" name="password" onChange={handleInputChange} placeholder='Password'
+              value={form.password} required />
           </div>
           <input type="submit" value="Login" className='submitBtn' />
         </form>

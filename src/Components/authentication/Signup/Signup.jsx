@@ -23,10 +23,18 @@ const Signup = () => {
     useEffect(() => {
         if (state.authState) {
             navigate('/')
+            window.location.reload()
         }
     }, [state.authState])
 
-    const onSubmit = async (values, action) => {
+
+    useEffect(() => {
+        if (!state.error && !state.isLoading) {
+            resetForm();
+        }
+    }, [state.error])
+
+    const onSubmit = async (values) => {
         await new Promise((resolve) => {
             setTimeout(() => {
                 resolve()
@@ -34,10 +42,9 @@ const Signup = () => {
         })
         delete values.confirmPassword;
         dispatch(signupRoute(values));
-        action.resetForm();
     }
 
-    const { values, errors, handleChange, handleBlur, handleSubmit, isSubmitting, touched } = useFormik({
+    const { values, errors, handleChange, handleBlur, handleSubmit, isSubmitting, touched, resetForm } = useFormik({
         initialValues: {
             username: '',
             email: '',
@@ -65,6 +72,9 @@ const Signup = () => {
                             {
                                 errors.username && touched.username && <p className="error">{errors.username}</p>
                             }
+                            {
+                                state.error && <p className="error">{state.error}</p>
+                            }
                         </div>
                         <div className="form-input">
                             <input type="email" name="email" value={values.email} placeholder="Email" onChange={handleChange} onBlur={handleBlur} className={`input ${errors.email && touched.email ? 'input-error' : ''}`} />
@@ -90,9 +100,6 @@ const Signup = () => {
                     </form>
                     {
                         isSubmitting || state.isLoading && <h2>Loading...</h2>
-                    }
-                    {
-                        (state.authState ? 'Logged In' : "Logged Out")
                     }
                 </div>
 

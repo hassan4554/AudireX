@@ -2,21 +2,22 @@ import { IoSearch } from "react-icons/io5";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { LuUser } from "react-icons/lu";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import Products from '../Utilities/productsData'
-import { hostname } from "../Utilities/hostname";
-import axios from "axios";
 import './navbar.css'
 import './searchbar.css'
 import './userMenu.css'
+import { meRoute } from "../Redux/Auth/authSlice";
 
 const Navbar = () => {
     const itemCount = useSelector((state) => state.cartItems.value.length);
+    const state = useSelector((state) => state.auth)
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [userMenu, setUserMenu] = useState(false);
     const [userLogged, setUserlogged] = useState({});
     const [isUserLogged, setIsUserLogged] = useState(false);
+    const dispatch = useDispatch()
 
     ///////////////////////////////////////////////////
 
@@ -31,32 +32,12 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        
-        if (token) {
-            axios.get(`${hostname}/auth/protected-route`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-                .then(response => {
-                    setUserlogged(response.data.user)
-                    setIsUserLogged(true)
-                })
-                .catch(error => {
-                    if (error.response && error.response.status === 401) {
-                        alert('Session expired. Please log in again.');
-                        goToAuthPage();
-                    } else {
-                        console.log(error);
-                    }
-                    setIsUserLogged(false)
-                })
-        } else {
-            setIsUserLogged(false);
+        dispatch(meRoute())
+        if (state.authState) {
+            setUserlogged(state.data)
+            setIsUserLogged(state.authState)
         }
-
-    }, [])
+    }, [state.authState])
 
 
     useEffect(() => {

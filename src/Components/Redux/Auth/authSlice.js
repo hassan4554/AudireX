@@ -1,44 +1,64 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { hostname } from '../../Utilities/hostname';
 
-export const signupRoute = createAsyncThunk('signupRoute', async (payload) => {
+export const signupRoute = createAsyncThunk('signupRoute', async (payload, { rejectWithValue }) => {
     try {
-        let response = await axios.post(`http://localhost:3000/auth/signup/`, payload)
-        return response.data
+        let response = await axios.post(`${hostname}/auth/signup/`, payload)
+
+        if (response.status === 200) {
+            return response.data
+        } else {
+            throw new Error('Error')
+        }
+
     } catch (error) {
-        return error.response.data
+        console.log('Error');
+
+        return rejectWithValue(error.response.data)
     }
 });
 
-export const loginRoute = createAsyncThunk('loginRoute', async (payload) => {
+export const loginRoute = createAsyncThunk('loginRoute', async (payload, { rejectWithValue }) => {
     try {
-        let response = await axios.post(`http://localhost:3000/auth/login/`, payload)
-        return response.data
+        let response = await axios.post(`${hostname}/auth/login/`, payload)
+        if (response.status === 200) {
+            return response.data
+        } else {
+            throw new Error('Error')
+        }
     } catch (error) {
-        return error.response.data
+        return rejectWithValue(error.response.data)
     }
 })
 
-export const meRoute = createAsyncThunk('meRoute', async () => {
+export const meRoute = createAsyncThunk('meRoute', async (_, { rejectWithValue }) => {
     try {
         const token = localStorage.getItem('token')
 
-        let response = await axios.get(`http://localhost:3000/auth/me/`, {
+        let response = await axios.get(`${hostname}/auth/me/`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-        return response.data
+        if (response.status === 200) {
+            return response.data
+        } else {
+            throw new Error('Error')
+        }
+
     } catch (error) {
-        return error.response.data
+        return rejectWithValue(error.response.data)
     }
 })
 
 const initialState = {
-    data: '',
-    accessToken: '',
+    data: null,
+    accessToken: null,
     authState: false,
-    isLoading: false
+    isLoading: false,
+    error: null,
+    meError: null
 }
 
 
@@ -51,93 +71,57 @@ export const authSlice = createSlice({
         builder
             .addCase(signupRoute.pending, (state) => {
                 state.isLoading = true
+                state.error = null
             })
             .addCase(signupRoute.fulfilled, (state, action) => {
                 let response = action.payload;
                 state.isLoading = false
-
-                if (response.error) {
-                    console.log(response.error)
-                    state.authState = false
-                } else {
-                    console.log(response.message)
-                    state.authState = true
-                    localStorage.setItem('token', response.token)
-                    state.accessToken = response.token
-                }
+                state.authState = true
+                localStorage.setItem('token', response.token)
+                state.accessToken = response.token
             })
             .addCase(signupRoute.rejected, (state, action) => {
-                console.log('Rejected')
                 state.isLoading = false
-                console.log(action)
+                state.error = action.payload.error
             })
 
         ////////////       LoginRoute      /////////////////////////
         builder
             .addCase(loginRoute.pending, (state) => {
                 state.isLoading = true
+                state.error = null
             })
             .addCase(loginRoute.fulfilled, (state, action) => {
                 state.isLoading = false;
-                if (action.payload.error) {
-                    console.log(action.payload.error)
-                } else {
-                    console.log(action.payload.message)
-
-                    if (action.payload.error == null && action.payload.token) {
-                        localStorage.setItem('token', action.payload.token)
-                        state.accessToken = action.payload.token
-                        state.authState = true
-                    }
-                }
+                localStorage.setItem('token', action.payload.token)
+                state.accessToken = action.payload.token
+                state.authState = true
             })
             .addCase(loginRoute.rejected, (state, action) => {
-                console.log('Login Rejected')
                 state.isLoading = false
-                console.log(action)
+                state.error = action.payload.error
             })
 
         ////////////    meRoute     ///////////////////////////
         builder
             .addCase(meRoute.pending, (state) => {
                 state.isLoading = true
+                state.meError = null
             })
             .addCase(meRoute.fulfilled, (state, action) => {
-                const response = action.payload
                 state.isLoading = false
-
-                if (response.error) {
-                    console.log(response.error)
-                    state.authState = false
-                } else {
-                    console.log(response.message)
-                    state.data = action.payload.data
-                    state.authState = true
-                }
+                state.data = action.payload.data
+                state.authState = true
             })
             .addCase(meRoute.rejected, (state, action) => {
-                console.log('Rejected')
                 state.isLoading = false
-                console.log(action)
+                state.meError = action.payload.error
             })
     },
     reducers: {
-        protectedRoute: (state) => {
-            let token = localStorage.getItem('token');
-            axios.get(`http://localhost:3000/auth/protected-route`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-                .then(response => {
-                    console.log(response)
-                    state.value = response.data
-                })
-                .catch(error => console.log(error))
-        }
     }
 })
 
-export const { protectedRoute } = authSlice.actions
+// export const { } = authSlice.actions
 
 export default authSlice.reducer
