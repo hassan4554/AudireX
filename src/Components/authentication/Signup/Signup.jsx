@@ -1,58 +1,52 @@
 import './Signup.css'
-import { useState, useRef, useEffect } from 'react'
-import { useContext } from 'react';
+// import { useState, useRef, useEffect } from 'react'
+import { useContext, useEffect } from 'react';
 import { authContext } from '../../Utilities/context';
 import Login from '../Login/login'
-import { hostname } from '../../Utilities/hostname'
+// import { hostname } from '../../Utilities/hostname'
 import { useDocTitle } from '../../Utilities/DocumentTitle';
+import { useFormik } from "formik"
+import { signupSchema } from "../../../Schema/signupSchema";
+import { useDispatch, useSelector } from "react-redux";
+import { signupRoute } from "../../Redux/Auth/authSlice";
+import { useNavigate } from 'react-router-dom';
+
 
 const Signup = () => {
     useDocTitle('Signup - AudireX');
-    const { setAuthPage } = useContext(authContext);
-    const [form, setForm] = useState({});
-    const submitBtnRef = useRef(null);
-    const [checkpass, setCheckPass] = useState('');
+    const { setAuthPage } = useContext(authContext)
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.auth)
 
-    const handleInputChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    }
 
     useEffect(() => {
-        if (checkpass != form.password) {
-            submitBtnRef.current.disabled = true
+        if (state.authState) {
+            navigate('/')
         }
-        else {
-            submitBtnRef.current.disabled = false;
-        }
-    }, [checkpass])
+    }, [state.authState])
 
-    const handlePasswordCheck = (e) => {
-        setCheckPass(e.target.value);
-        console.log(checkpass == form.pass);
+    const onSubmit = async (values, action) => {
+        await new Promise((resolve) => {
+            setTimeout(() => {
+                resolve()
+            }, 1000);
+        })
+        delete values.confirmPassword;
+        dispatch(signupRoute(values));
+        action.resetForm();
     }
 
-    const handleFormSubmit = async (e) => {
-        e.preventDefault()
-
-        let a = await fetch(`${hostname}/auth/signup`,
-            {
-                method: 'POST',
-                headers: {
-                    Accept: '/',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(form)
-            }
-        )
-
-        let response = await a.json();
-
-        if (response.message == null) {
-            alert(response.error);
-        } else {
-            setAuthPage(<Login />);
-        }
-    }
+    const { values, errors, handleChange, handleBlur, handleSubmit, isSubmitting, touched } = useFormik({
+        initialValues: {
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
+        },
+        validationSchema: signupSchema,
+        onSubmit
+    })
 
     return (
         <div className="signup-container">
@@ -62,23 +56,47 @@ const Signup = () => {
                     <span onClick={() => { setAuthPage(<Login />) }}>Login</span>
                 </div>
                 <div className="gap"></div>
-                <form className="signup-form" onSubmit={handleFormSubmit}>
-                    <div className='form-input'>
-                        <input type="text" name="username" onChange={handleInputChange} value={form.username} placeholder='Username' required />
-                    </div>
-                    <div className='form-input'>
-                        <input type="email" name="email" onChange={handleInputChange} value={form.email} placeholder='Email' required />
-                    </div>
-                    <div className='form-input'>
-                        <input type="password" name="password" onChange={handleInputChange} value={form.password} placeholder='Password' required />
-                    </div>
-                    <div className='form-input'>
-                        <input type="password" name="Checkpassword" onChange={handlePasswordCheck} value={checkpass} placeholder='Check Password' required />
-                    </div>
-                    <div>
-                        <input type="submit" value="Signup" className='submitBtn' ref={submitBtnRef} />
-                    </div>
-                </form>
+
+
+                <div>
+                    <form onSubmit={handleSubmit} className="signup-form">
+                        <div className="form-input">
+                            <input type="text" name="username" value={values.username} placeholder="Username" onChange={handleChange} onBlur={handleBlur} className={`input ${errors.username && touched.username ? 'input-error' : ''}`} />
+                            {
+                                errors.username && touched.username && <p className="error">{errors.username}</p>
+                            }
+                        </div>
+                        <div className="form-input">
+                            <input type="email" name="email" value={values.email} placeholder="Email" onChange={handleChange} onBlur={handleBlur} className={`input ${errors.email && touched.email ? 'input-error' : ''}`} />
+                            {
+                                errors.email && touched.email && <p className="error">{errors.email}</p>
+                            }
+                        </div>
+                        <div className="form-input">
+                            <input type="password" name="password" value={values.password} placeholder="Password" onChange={handleChange} onBlur={handleBlur} className={`input ${errors.password && touched.password ? 'input-error' : ''}`} />
+                            {
+                                errors.password && touched.password && <p className="error">{errors.password}</p>
+                            }
+                        </div>
+                        <div className="form-input">
+                            <input type="password" name="confirmPassword" value={values.confirmPassword} placeholder="Confirm Password" onChange={handleChange} onBlur={handleBlur} className={`input ${errors.confirmPassword && touched.confirmPassword ? 'input-error' : ''}`} />
+                            {
+                                errors.confirmPassword && touched.confirmPassword && <p className="error">{errors.confirmPassword}</p>
+                            }
+                        </div>
+                        <div>
+                            <button className="submitBtn" disabled={isSubmitting} type="submit" >Submit</button>
+                        </div>
+                    </form>
+                    {
+                        isSubmitting || state.isLoading && <h2>Loading...</h2>
+                    }
+                    {
+                        (state.authState ? 'Logged In' : "Logged Out")
+                    }
+                </div>
+
+
                 <div className="gap"></div>
                 <div className="or-div">
                     <div className="seperator"></div>

@@ -109,40 +109,6 @@ input[type='checkbox']:hover {
     display: none;
 }
 
-/* @media only screen and (max-width:52.5em) {
-    .allProducts-container {
-        grid-template-columns: 1fr;
-    }
-
-    .filters-tab {
-        display: grid;
-        grid-template-columns: 0.3fr 0.7fr;
-        height: auto;
-        overflow: none;
-        gap: 3rem;
-    }
-
-    .clearBtn {
-        align-self: start;
-        grid-column: 1/2;
-    }
-
-    .sort {
-        grid-column: 1/2;
-    }
-
-    .filter {
-        display: grid;
-        align-items: center;
-        grid-column: 2/3;
-    }
-
-    .filter-div {
-        display: flex;
-        column-gap: 3rem;
-    }
-} */
-
 @media only screen and (max-width:52.5em) {
     .allProducts-container {
         grid-template-columns: 1fr;
@@ -150,7 +116,7 @@ input[type='checkbox']:hover {
 
     .filters-tab {
         position: fixed;
-        top: 0;
+        top: 6%;
         left: -100%;
         width: 30rem;
         height: 100%;

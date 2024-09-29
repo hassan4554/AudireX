@@ -26,6 +26,11 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  max-width: 128rem;
+  margin: 0 auto;
+}
+
 button:hover {
   cursor: pointer;
 }
@@ -62,6 +67,12 @@ button:hover {
 .inactive-link {
   color: inherit;
   text-decoration: none;
+}
+
+.error {
+  color: #ff0000;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
 }
 
 @media only screen and (max-width:40em) {

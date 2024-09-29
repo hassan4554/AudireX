@@ -32,6 +32,7 @@ const Navbar = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+        
         if (token) {
             axios.get(`${hostname}/auth/protected-route`, {
                 headers: {
