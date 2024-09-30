@@ -38,10 +38,9 @@ const Signup = () => {
         await new Promise((resolve) => {
             setTimeout(() => {
                 resolve()
-            }, 1000);
+            }, 1000)
         })
-        delete values.confirmPassword;
-        dispatch(signupRoute(values));
+        dispatch(signupRoute(values))
     }
 
     const { values, errors, handleChange, handleBlur, handleSubmit, isSubmitting, touched, resetForm } = useFormik({
@@ -95,7 +94,7 @@ const Signup = () => {
                             }
                         </div>
                         <div>
-                            <button className="submitBtn" disabled={isSubmitting} type="submit" >Submit</button>
+                            <button className={isSubmitting ? `submitBtn disable` : `submitBtn`} disabled={isSubmitting} type="submit" >Submit</button>
                         </div>
                     </form>
                     {

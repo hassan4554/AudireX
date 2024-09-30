@@ -16,7 +16,8 @@ import './Product.css'
 
 const Product = () => {
     useDocTitle('Product Details - AudireX ')
-    ScrollToTop();
+
+
     const { id } = useParams();
     const index = Products.findIndex(product => product.id == id);
     const dispatch = useDispatch();
@@ -32,6 +33,10 @@ const Product = () => {
 
     useEffect(() => {
         setImage(data.images[0]);
+    }, [id])
+
+    useEffect(() => {
+        ScrollToTop();
     }, [id])
 
     const setStyle = (cat) => ({

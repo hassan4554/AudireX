@@ -56,6 +56,10 @@
     cursor: pointer;
 }
 
+.submitBtn:disabled {
+    opacity: 0.6
+}
+
 .or-div {
     display: grid;
     grid-template-columns: 1fr max-content 1fr;
