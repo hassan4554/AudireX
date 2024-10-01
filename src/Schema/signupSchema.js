@@ -9,11 +9,11 @@ export const signupSchema = yup.object().shape({
     .required("Required"),
   username: yup
     .string()
-    .min(5, 'Username must be atleast 5 charachters')
+    .min(5, 'Username must be atleast 5 characters')
     .required('Required'),
   password: yup
     .string()
-    .min(5)
+    .min(8)
     .matches(passwordPattern, { message: 'Incorrect Password Pattern' })
     .required("Required"),
   confirmPassword: yup

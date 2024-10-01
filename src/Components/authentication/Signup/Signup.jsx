@@ -1,9 +1,7 @@
 import './Signup.css'
-// import { useState, useRef, useEffect } from 'react'
 import { useContext, useEffect } from 'react';
 import { authContext } from '../../Utilities/context';
 import Login from '../Login/login'
-// import { hostname } from '../../Utilities/hostname'
 import { useDocTitle } from '../../Utilities/DocumentTitle';
 import { useFormik } from "formik"
 import { signupSchema } from "../../../Schema/signupSchema";
